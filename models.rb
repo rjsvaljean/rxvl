@@ -3,7 +3,7 @@ require 'haml'
 require 'hpricot'
 
 APP_ROOT= File.dirname(__FILE__) 
-BLOG_BASE= "http://rxvl.lan"
+BLOG_BASE= "http://rjsvlajean.heroku.com"
 
 class Post
 
