@@ -1,0 +1,3 @@
+dm-core --version '>= 0.10.2'
+hpricot --version '>= 0.8.2'
+haml --version '>= 2.2.24'
