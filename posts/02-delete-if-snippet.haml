@@ -1,0 +1,9 @@
+%h1
+  The delete_if method
+%p.content
+  .snippet
+    I just discovered the Array's delete_if method. Its extremely nifty and I tought I'd share it here.
+  .main
+    This is an example of the use of the delete_if method. As the name suggests it is used to delete certain elements of an array if they satisfy certain conditions. For example if I wanted to get a list of all elements in a directory without . and .. , I could use this:
+    %pre
+      Dir.entries('directory').delete_if {|i| i=~ /^\.*$/}
