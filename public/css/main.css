@@ -2,16 +2,18 @@ body {
   font-size: 110%;
 }
 
+a {
+color: black;
+}
+
 #nav a {
   font-size: 120%;
   font-weight: bold;
-  color: black;
   margin: 0px 10px;
 }
 
 .post_title a {
   font-size: 140%;
-  color: black;
 }
 
 pre {

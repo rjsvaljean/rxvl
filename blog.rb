@@ -20,3 +20,8 @@ end
 get '/about' do
   haml :about
 end
+
+get '/archive' do
+  @categories= Category.all
+  haml :archive
+end
