@@ -7,8 +7,8 @@ color: black;
 }
 
 #nav a {
-  font-size: 120%;
-  font-weight: bold;
+  font-size: 80%;
+  text-transform: uppercase;
   margin: 0px 10px;
 }
 
