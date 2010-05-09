@@ -40,7 +40,12 @@ class Post
   end
   
   def set_created_at
-    self.created_at= Time.now
+    begin
+      date= Date.parse((hpricot_doc/'span[@class="date"]').inner_html.strip)
+    rescue
+      date= nil
+    end
+    self.created_at= date || Time.now
   end
 
   def self.get_title(file_name)
