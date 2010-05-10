@@ -19,7 +19,7 @@
           $ passenger-install-apache2-module
       %br
       That will download and compile passenger's apache modules. Once compiled the installer will give you instructions to load these modules using apache configuration directives. You'll probably have to edit your apache configuration file for that. If you're on linux, these will probably be in /etc/apache2/[apache2.conf|httpd.conf]. Just append the three lines that the installer gives you to this file. They'll look something like this:
-      %pre
+      %pre{:name => "code", :class => "ruby"}
         =preserve do
           :escaped
           LoadModule passenger_module /home/rjsvaljean/dev/ruby/lib/ruby/gems/1.8/gems/passenger-2.2.11/ext/apache2/mod_passenger.so
@@ -45,7 +45,7 @@
       %pre
         NameVirtualHost *:80
       Now define your VirtualHost sections:
-      %pre
+      %pre{:name => "code", :class => "xml"}
         =preserve do
           :escaped
           =Rack::Utils.escape_html('<VirtualHost *:80>')
