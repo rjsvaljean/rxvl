@@ -41,4 +41,62 @@
     %h3
       DataMapper
     %div
-      Now lets start writing the actual app. We start as with a norman rails app with the models.
+      Now lets start writing the actual app. We start as with a normal rails app with the models. As you can imagine, we'd need a post model. You would also usually use a comments model but I want to use Disqus for my commenting system so I'll demonstrate inter-model relationships with a category model. Post and Category have a has and belongs to many relationship. I'll show you how to do that with DataMapper. So first the migrations. Create db directory and create the following migrations.rb file:
+      %pre
+        =preserve do
+          :escaped
+          DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/datastore.sqlite3")
+          
+          class Post
+          \ include DataMapper::Resource
+
+          \ property :id, Serial
+          \ property :title, String, :required => true
+          \ property :slug, String
+          \ property :file_name, String, :required => true
+          \ property :created_at, DateTime
+
+          \ has n, :categorizations
+          \ has n, :categories, :through => :categorizations
+          end
+
+          class Category
+          \ include DataMapper::Resource
+
+          \ property :id, Serial
+          \ property :name, String
+
+          \ has n, :categorizations
+          \ has n, :posts, :through => :categorizations
+          end
+
+          class Categorization
+          \ include DataMapper::Resource
+
+          \ property :id, Serial
+          \ 
+          \ belongs_to :category
+          \ belongs_to :post
+          end
+      The explanation: 
+      %ul
+        %li
+          The first line defines the link to the database. I've used an sqlite database here. Setting up a connection to a mysql or postgres DB should be no different. the ENV['DATABASE_URL'] bit is for heroku. My local database is the datastore.sqlite3 file. Once this is delpoyed it'll get the information of the DB URL from heroku.
+          %strong
+            DataMapper::Resource 
+          is a module that you will have to include in all your model classes. Since the migration is the first time I'm defining the model class Post I'm including it there. 
+      %li
+        Next the 
+        %strong
+          property
+        lines. These as you might have guessed are used to define the feilds of the post. Since I'm defining a blogging engine to read the post from a file rather than a database there are some differences between the design here and a conventional Post. 
+      %li
+        Note here that unlike ActiveRecord the id field isn't automatically created for you you'll have to define it with the type Serial. DataMapper takes care of the automatic updation of the field if its of type Serial. Now coming to the HABTM relationship. Category as you can see has only one field: name. Categorization is the mapping table. it has only one property which is the id. Now relationships are defined with the has and belongs_to methods. If you'd wanted to define a one to many relationship from post to category the post class would have 
+      %pre
+        has n :categories
+      \ and the Category class would have 
+      %pre
+        belongs_to :post
+      Extending the principle, you can see how what is shown above would work. This gives you Category.new.posts and Post.new.categories.
+      %h3
+        More coming soon!
