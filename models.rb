@@ -96,7 +96,7 @@ end
 class Category
   def self.add_to_post
     puts "Select from the folowing posts: "
-    puts Post.all.collect {|i| "#{i.id}. #{i.title} -> #{i.categories.collect(&:name).join(', ')}"}
+    puts Post.all.collect {|i| "#{i.id}. #{i.title} -> #{(i.categories.collect{|i| i.name}).join(', ')}"}
     post= Post.all(:id => gets.strip.to_i).first
     puts "Select from the available categories(enter comma separated numbers):"
     puts Category.all.collect {|i| "#{i.id}. #{i.name}"}
@@ -104,6 +104,8 @@ class Category
     if (input= gets.strip) == "*"
       puts "Enter category name"
       Category.new(:name => gets.strip).save
+      post.categories += [Category.last]
+      post.save
       puts "Category created. Thank You!"
     else
       categories= (input.split(",").collect{|i| i.strip.to_i}).collect {|i| Category.all(:id => i).first}
