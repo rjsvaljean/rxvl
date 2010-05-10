@@ -9,8 +9,12 @@ end
 
 get '/post/:slug' do |slug|
   @post= Post.all(:slug => slug)[0]
-  @extra_title= @post.title
-  haml :post
+  if @post
+    @extra_title= @post.title
+    haml :post
+  else
+    haml :not_found
+  end
 end
 
 get '/projects' do
@@ -29,4 +33,8 @@ end
 get '/feed.xml' do
   @posts= Post.all
   builder :feed
+end
+
+not_found do
+  haml :not_found
 end
