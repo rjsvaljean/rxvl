@@ -1,2 +1,2 @@
-datastore.sqlite3
+db/datastore.sqlite3
 tmp/restart.txt

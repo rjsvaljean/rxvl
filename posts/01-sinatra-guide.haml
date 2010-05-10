@@ -8,9 +8,37 @@
   .snippet
     I've been meaning for some time to write my own blogging engine and now that I finally got the time I went for it. It was meant to be a learning excercise so I tried to use tools and libraries that I'd never used before. I ended up chosing Sinatra for the framework to write it in with an SQLite DB and using DataMapper as the ORM. Also, I intended to host it on Heroku. In this article I've described everything from setting up my development environment for sinatra to finally deploying it on Heroku. Enjoy!
     %br
-    %strong
-      Update:
-    The whole process is apparently too big for one post so I'm going to break it down into several. I hope I can keep it comprehensible.
   .main
-    %h2
-      coming soon
+    %h3
+      Setting up
+    %div
+      Our first goal is to get a basic, "Hello World!" Sinatra app running with passenger and apache. You most probably have apache and passenger setup, so feel free to skip the next bit. For those who don't, you should. Setting up passenger is the easiest thing. I've written about it 
+      %a{:href => '/posts/passenger-guide'}
+        here
+      \.
+      Set up a VirtualHost to point to a directory named public in the directory where we're going to have our sinatra app (/path/to/app/public). Create this empty directory. No special configuration is required in the apcache config file just treat it like a normal rails app. Now in /path/to/app lets create the sinatra app in the file app.rb. For a basic Hello World! application it'll include something like this:
+      %pre
+        =preserve do
+          :escaped
+          get '/' do
+          \  "Hello World!"
+          end
+      Next we need the rackup file, Sinatra being a rack framework. This is my config.ru:
+      %pre
+        =preserve do
+          :escaped
+          require 'sinatra'
+          require 'app.rb'
+
+          root_dir= File.dirname(__FILE__)
+          ENV['RACK_ENV'] ||= 'development'
+          set :environment, ENV['RACK_ENV'].to_sym
+          set :root, root_dir
+          disable :run
+
+          run Sinatra::Application
+      And that's it. Point your browser to the ServerName that you'd specified in that VirtualHost config and you should see Hello World!
+    %h3
+      DataMapper
+    %div
+      Now lets start writing the actual app. We start as with a norman rails app with the models.

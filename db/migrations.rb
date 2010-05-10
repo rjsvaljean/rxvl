@@ -1,6 +1,4 @@
-require 'dm-core'
-
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/datastore.sqlite3")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/datastore.sqlite3")
 
 class Post
   include DataMapper::Resource

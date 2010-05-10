@@ -1,5 +1,7 @@
-require 'models'
+APP_ROOT= File.dirname(__FILE__) 
+BLOG_BASE= "http://rjsvaljean.heroku.com"
 
+require 'models/base.rb'
 
 get '/' do
   @posts= Post.first(5)
