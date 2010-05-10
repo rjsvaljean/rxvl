@@ -35,6 +35,16 @@ get '/feed.xml' do
   builder :feed
 end
 
+get '/category/:name' do |name|
+  @category= Category.all(:name => name)
+  if @category.empty?
+    haml :not_found
+  else
+    @posts= @category.first.posts
+    haml :home
+  end
+end
+
 not_found do
   haml :not_found
 end

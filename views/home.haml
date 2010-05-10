@@ -2,11 +2,13 @@
   -@posts.each do |post|
     %div{:id => "post-#{post.id}", :class => "post"}
       .post_header
-        .post_title.alt.span-15
+        .post_date.span-2
+          =post.date
+        .post_title.alt.span-12
           %a{:href => post.permalink}
             =post.title
-        .post_info.span-3.last
-          =post.date
+        .post_categories.span-6.last
+          =(post.categories.collect{|i| "<a href='/category/#{i.name}'>#{i.name}</a>"}).join(', ')
       %hr
       .post_snippet.span-20
         =post.snippet

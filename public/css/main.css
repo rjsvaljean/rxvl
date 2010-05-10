@@ -16,6 +16,19 @@ color: black;
   font-size: 140%;
 }
 
+.post_categories a {
+  font-size: 80%;
+  text-transform: uppercase;
+  background-color: #DDD;
+}
+
+.post_date {
+  background-color: #DDD;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
 pre {
   font-size: 80%;
   overflow: auto;
