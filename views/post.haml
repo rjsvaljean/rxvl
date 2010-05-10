@@ -3,3 +3,21 @@
     =@post.title
 .content
   =@post.content
+.comments
+  #disqus_thread
+  %script{ :type => "text/javascript" }
+    ="var disqus_identifier='#{@post.slug}'"
+    :plain
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://rjsvaljean.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  %noscript
+    Please enable JavaScript to view the
+    %a{ :href => "http://disqus.com/?ref_noscript=rjsvaljean" }
+      comments powered by Disqus.
+  %a.dsq-brlink{ :href => "http://disqus.com" }
+    blog comments powered by
+    %span.logo-disqus
+      Disqus
