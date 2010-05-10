@@ -59,6 +59,18 @@ class Post
     title.strip
   end
 
+  def file_created_at
+    Date.parse((hpricot_doc/'span[@class="date"]').inner_html.strip)
+  end
+
+  def file_categories
+    (hpricot_doc/'span[@class="categories"]').inner_html.strip.split(/,\ */).collect{|cat| Category.create_or_find(cat)}
+  end
+
+  def file_slug
+    file_name[3..-6]
+  end
+
   def self.update(post_id = nil)
     posts= (Dir.entries('posts').delete_if {|i| i=~ /^\..*$/}).sort
     if post_id
@@ -70,7 +82,10 @@ class Post
       else
         file_name= file_name[0]
         post= Post.all(:file_name => file_name)[0]
-        post.update(:title => get_title(file_name))
+        post.update(:title => get_title(file_name), 
+                    :created_at => post.file_created_at,
+                    :slug => post.file_slug,
+                    :categories => post.file_categories)
       end
     else
       if Post.last
@@ -90,38 +105,32 @@ class Post
   end
 end
 
-class Comment
-end
-
 class Category
-  def self.add_to_post
-    puts "Select from the folowing posts: "
-    puts Post.all.collect {|i| "#{i.id}. #{i.title} -> #{(i.categories.collect{|i| i.name}).join(', ')}"}
-    post= Post.all(:id => gets.strip.to_i).first
-    puts "Select from the available categories(enter comma separated numbers):"
-    puts Category.all.collect {|i| "#{i.id}. #{i.name}"}
-    puts "*. Add a new category"
-    if (input= gets.strip) == "*"
-      puts "Enter category name"
-      Category.new(:name => gets.strip).save
-      post.categories += [Category.last]
-      post.save
-      puts "Category created. Thank You!"
+
+  def self.create_or_find(cat)
+    cats= Category.all(:name => cat)
+    unless cats.empty?
+      cats.first
     else
-      categories= (input.split(",").collect{|i| i.strip.to_i}).collect {|i| Category.all(:id => i).first}
-      post.categories += categories
-      post.save
+      new_cat= Category.new(:name => cat)
+      new_cat.save
+      new_cat
     end
   end
 
-  def self.remove_from_post
-    puts "Select from the folowing posts: "
-    puts Post.all.collect {|i| "#{i.id}. #{i.title}"}
-    post= Post.all(:id => gets.strip.to_i).first
-    puts "Select from the available categories(enter comma separated numbers):"
-    puts post.categories.collect {|i| "#{i.id}. #{i.name}"}
-    categories= (gets.strip.split(",").collect{|i| i.strip.to_i}).collect {|i| Category.all(:id => i).first}
-    post.categories -= categories
-    post.save
+  def self.add_to_post(post_slug)
+    post= Post.all(:slug => post_slug).first
+    if post
+      categories= (post.hpricot_doc/'span[@class="categories"]').inner_html.strip.split(/,\ */)
+      available_categories= Category.all.collect{|i| i.name}
+      categories.each do |cat|
+        Category.new(:name => cat).save unless avialable_categories.include? cat
+        post.categories += Category.all(:name => cat)
+        puts "Added Category: #{cat}"
+      end
+      post.save
+    else
+      puts "Couldn't find your post please try again"
+    end
   end
 end

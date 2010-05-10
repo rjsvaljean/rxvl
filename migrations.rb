@@ -11,21 +11,8 @@ class Post
   property :file_name, String, :required => true
   property :created_at, DateTime
 
-  has n, :comments
   has n, :categorizations
   has n, :categories, :through => :categorizations
-end
-
-class Comment
-  include DataMapper::Resource
-
-  property :id, Serial
-  property :author_name, String
-  property :author_email, String
-  property :author_url, String
-  property :content, Text
-
-  belongs_to :post
 end
 
 class Category
