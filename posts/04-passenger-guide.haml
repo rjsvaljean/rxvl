@@ -48,12 +48,12 @@
       %pre
         =preserve do
           :escaped
-          <VirtualHost *:80>
-          ServerName blog.lan
-          DocumentRoot /path/to/app/blog/public
-          </VirtualHost>
-          <VirtualHost *:80>
-          ServerName todolist.lan
-          DocumentRoot /path/to/app/todolist/public
-          </VirtualHost>
+          =Rack::Utils.escape_html('<VirtualHost *:80>')
+          \  ServerName blog.lan
+          \  DocumentRoot /path/to/app/blog/public
+          =Rack::Utils.escape_html('</VirtualHost>')
+          =Rack::Utils.escape_html('<VirtualHost *:80>')
+          \  ServerName todolist.lan
+          \  DocumentRoot /path/to/app/todolist/public
+          =Rack::Utils.escape_html('</VirtualHost>')
       Now reload apache with '/etc/init.d/apache2 reload' and you're done. Pointing your browser to blog.lan or todolist.lan whould show you the default rails page for a new app.

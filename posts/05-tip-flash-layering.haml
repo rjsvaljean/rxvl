@@ -10,4 +10,4 @@
     %pre
       =preserve do
         :escaped
-        <embed src="...", wmode = "transparent"/>
+        =Rack::Utils.escape_html('<embed src="...", wmode = "transparent"/>')
