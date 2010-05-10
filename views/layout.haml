@@ -10,9 +10,18 @@
       \- Ratan Sebastian
     %link{ :href => "/css/blueprint/screen.css", :rel => "stylesheet", :type => "text/css", :media => "screen, projection" }
     %link{ :href => "/css/blueprint/print.css", :rel => "stylesheet", :type => "text/css", :media => "print" }
-    //[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif] 
     %link{ :href => "/css/main.css", :rel => "stylesheet", :type => "text/css" }
     %link{ :href => "http://feeds.feedburner.com/rjsvaljean", :title => "Ratan Sebastian: Posts", :rel => "alternate", :type => "application/rss+xml" }
+    %link{ :href => "/js/syntax/SyntaxHighlighter.css", :rel => "stylesheet", :type => "text/css" }
+    %script{:language => "javascript", :src => "/js/syntax/shCore.js"}
+    %script{:language => "javascript", :src => "/js/syntax/shBrushRuby.js"}
+    %script{:language => "javascript", :src => "/js/syntax/shBrushXml.js"}
+    %script{:language => "javascript", :src => "/js/syntax/shBrushJScript.js"}
+    %script{:language => "javascript"}
+      window.onload = function () {
+      dp.SyntaxHighlighter.ClipboardSwf = '/js/syntax/clipboard.swf';
+      dp.SyntaxHighlighter.HighlightAll('code');
+      }
   %body{ :class => "url_parts" }
     #everything.container
       #head.span-20.last

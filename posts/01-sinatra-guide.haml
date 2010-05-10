@@ -17,14 +17,14 @@
         here
       \.
       Set up a VirtualHost to point to a directory named public in the directory where we're going to have our sinatra app (/path/to/app/public). Create this empty directory. No special configuration is required in the apcache config file just treat it like a normal rails app. Now in /path/to/app lets create the sinatra app in the file app.rb. For a basic Hello World! application it'll include something like this:
-      %pre
+      %pre{:name => "code", :class => "ruby"}
         =preserve do
           :escaped
           get '/' do
           \  "Hello World!"
           end
       Next we need the rackup file, Sinatra being a rack framework. This is my config.ru:
-      %pre
+      %pre{:name => "code", :class => "ruby"}
         =preserve do
           :escaped
           require 'sinatra'
@@ -42,7 +42,7 @@
       DataMapper
     %div
       Now lets start writing the actual app. We start as with a normal rails app with the models. As you can imagine, we'd need a post model. You would also usually use a comments model but I want to use Disqus for my commenting system so I'll demonstrate inter-model relationships with a category model. Post and Category have a has and belongs to many relationship. I'll show you how to do that with DataMapper. So first the migrations. Create db directory and create the following migrations.rb file:
-      %pre
+      %pre{:name => "code", :class => "ruby"}
         =preserve do
           :escaped
           DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db/datastore.sqlite3")
