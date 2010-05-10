@@ -25,3 +25,8 @@ get '/archive' do
   @categories= Category.all
   haml :archive
 end
+
+get '/feed.xml' do
+  @posts= Post.all
+  builder :feed
+end
