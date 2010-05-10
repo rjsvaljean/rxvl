@@ -4,7 +4,7 @@ BLOG_BASE= "http://rjsvaljean.heroku.com"
 require 'models/base.rb'
 
 get '/' do
-  @posts= Post.first(5)
+  @posts= Post.first(5, :order => [:created_at.desc])
   @extra_title= "Home"
   haml :home
 end
@@ -28,6 +28,7 @@ get '/about' do
 end
 
 get '/archive' do
+  @extra_title= "Archive"
   @categories= Category.all
   haml :archive
 end
@@ -38,6 +39,7 @@ get '/feed.xml' do
 end
 
 get '/category/:name' do |name|
+  @extra_title= "Category: #{name}"
   @category= Category.all(:name => name)
   if @category.empty?
     haml :not_found

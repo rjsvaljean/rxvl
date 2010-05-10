@@ -1,10 +1,11 @@
 #archive
   #left-categories.span-9.colborder
     -@categories[0..@categories.length/2].each do |cat|
-      -unless cat.posts.empty?
+      -unless cat.posts(:order => [:created_at.desc]).empty?
         %div{:id => "category-#{cat.id}"}
           %h3
-            =cat.name
+            %a{:href => "/category/#{cat.name}"}
+              =cat.name
           %ul
             -cat.posts.each do |post|
               %li
@@ -12,10 +13,11 @@
                   ="#{post.title} - #{post.date}"
   #right-categories.span-10.last
     -@categories[@categories.length/2+1..@categories.length].each do |cat|
-      -unless cat.posts.empty?
+      -unless cat.posts(:order => [:created_at.desc]).empty?
         %div{:id => "category-#{cat.id}"}
           %h3
-            =cat.name
+            %a{:href => "/category/#{cat.name}"}
+              =cat.name
           %ul
             -cat.posts.each do |post|
               %li

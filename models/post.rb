@@ -1,7 +1,7 @@
 class Post
 
   before :save, :create_slug
-  before :save, :set_created_at 
+  before :save, :set_created_at
 
   def date
     created_at.strftime("%d %b") if created_at
@@ -85,12 +85,14 @@ class Post
         unless posts.last == Post.last.file_name
           new_post= Post.new(:title => get_title(posts.last),
                               :file_name => posts.last)
+          new_post.categories= new_post.file_categories
           new_post.save
         end
       else
         posts.each do |post|
           new_post= Post.new(:title => get_title(post),
                               :file_name => post)
+          new_post.categories= new_post.file_categories
           new_post.save
         end
       end
