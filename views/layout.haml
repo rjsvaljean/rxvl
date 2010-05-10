@@ -13,11 +13,11 @@
     %link{ :href => "/css/main.css", :rel => "stylesheet", :type => "text/css" }
     %link{ :href => "http://feeds.feedburner.com/rjsvaljean", :title => "Ratan Sebastian: Posts", :rel => "alternate", :type => "application/rss+xml" }
     %link{ :href => "/js/syntax/SyntaxHighlighter.css", :rel => "stylesheet", :type => "text/css" }
-    %script{:language => "javascript", :src => "/js/syntax/shCore.js"}
-    %script{:language => "javascript", :src => "/js/syntax/shBrushRuby.js"}
-    %script{:language => "javascript", :src => "/js/syntax/shBrushXml.js"}
-    %script{:language => "javascript", :src => "/js/syntax/shBrushJScript.js"}
-    %script{:language => "javascript"}
+    %script{:type => "text/javascript", :src => "/js/syntax/shCore.js"}
+    %script{:type => "text/javascript", :src => "/js/syntax/shBrushRuby.js"}
+    %script{:type => "text/javascript", :src => "/js/syntax/shBrushXml.js"}
+    %script{:type => "text/javascript", :src => "/js/syntax/shBrushJScript.js"}
+    %script{:type => "text/javascript"}
       window.onload = function () {
       dp.SyntaxHighlighter.ClipboardSwf = '/js/syntax/clipboard.swf';
       dp.SyntaxHighlighter.HighlightAll('code');
@@ -59,7 +59,7 @@
             %a{ :href => "http://validator.w3.org/check?uri=referer" }
               %img{ :src => "http://www.w3.org/Icons/valid-html401-blue", :height => "31", :alt => "Valid HTML 4.01 Strict", :width => "88" }
             %a{ :href => "http://github.com/rjsvaljean"}
-              %img.left{ :src => "/images/github-icon.png"}
+              %img.left{ :src => "/images/github-icon.png", :alt => "rjsvaljean's Github Profile"}
           %div.span-5.last
             %strong
               Powered By:
