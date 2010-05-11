@@ -20,10 +20,12 @@ get '/post/:slug' do |slug|
 end
 
 get '/projects' do
+  @extra_title = "Projects"
   haml :projects
 end
 
 get '/about' do
+  @extra_title = "About Me"
   haml :about
 end
 
