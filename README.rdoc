@@ -1,0 +1,17 @@
+= rxvl
+
+This is the code running my personal blog at rjsvaljean.heroku.com. I thought I'd share it here for anyone who's interested. Its a sinatra app using a DataMapper ORM and an SQLite datastore. The posts are written in HAML and are stored in files.
+
+== Pross and Cons
+
+===Pros
+- Posts maintained with git. No more messy HTML forms to write your posts write them in your favourite text editor.
+- Write your posts in haml.
+- Very minimalist. Only for programmers.
+
+===Cons
+- You need to have shell access to the host.
+- Right now only HAML is supported. More formats to come soon.
+- Very minimalist. Only for programmers.
+
+
