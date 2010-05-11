@@ -35,6 +35,11 @@ get '/archive' do
   haml :archive
 end
 
+get '/pics' do
+  @extra_title= "Photographs"
+  haml :pics
+end
+
 get '/feed.xml' do
   @posts= Post.all
   builder :feed
