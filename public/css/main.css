@@ -6,6 +6,10 @@ a {
 color: black;
 }
 
+.center {
+  text-align: center;
+}
+
 #nav a {
   font-size: 80%;
   text-transform: uppercase;
