@@ -2,7 +2,7 @@ APP_ROOT= File.dirname(__FILE__)
 BLOG_BASE= "http://rjsvaljean.heroku.com"
 
 require 'json'
-require 'models/base.rb'
+require File.join(APP_ROOT, 'models', 'base.rb')
 
 get '/' do
   @posts= Post.first(5, :order => [:created_at.desc])

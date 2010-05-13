@@ -4,7 +4,16 @@ class Post
   before :save, :set_created_at
 
   def self.list_files
-    Dir.entries(File.join(APP_ROOT, 'posts').delete_if{|i| i.match(/^\..*$/)})
+    response= {}
+    Dir.entries(File.join(APP_ROOT, 'posts')).delete_if{|i| i.match(/^\..*$/)}.each do |i|
+      post= Post.all(:file_name => i)
+      if post.empty?
+        response.merge!({i => nil})
+      else
+        response.merge!({i => post[0].id})
+      end
+    end
+    response
   end
 
   def self.include?(id)
@@ -84,10 +93,11 @@ class Post
       if file_name.empty?
         raise NameError
       elsif file_name.length > 1
-        puts "Ambiguity between these posts:\n #{file_name.join("\n* ")}"
+        puts "Ambiguity between these posts:\n* #{file_name.join("\n* ")}"
       else
         file_name= file_name[0]
         post= Post.all(:file_name => file_name)[0]
+        unless post; post= Post.new(:file_name => file_name); post.save; end
         post.update(:title => get_title(file_name), 
                     :created_at => post.file_created_at,
                     :slug => post.file_slug,

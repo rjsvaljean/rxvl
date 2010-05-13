@@ -4,7 +4,7 @@ class Post
   include DataMapper::Resource
 
   property :id, Serial
-  property :title, String, :required => true
+  property :title, String
   property :slug, String
   property :file_name, String, :required => true
   property :created_at, DateTime
