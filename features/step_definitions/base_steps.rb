@@ -5,7 +5,7 @@ Given /^I visit the "(.*)" page$/ do |page|
 end
 
 Given /^I have added a new post haml file*/ do
-  File.open('99-test-post.haml','w') do |file|
+  File.open('posts/99-test-post.haml','w') do |file|
     file.write("%h1
   This is a test
 %span.date

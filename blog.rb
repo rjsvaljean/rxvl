@@ -1,6 +1,7 @@
 APP_ROOT= File.dirname(__FILE__) 
 BLOG_BASE= "http://rjsvaljean.heroku.com"
 
+require 'json'
 require 'models/base.rb'
 
 get '/' do
@@ -19,6 +20,25 @@ get '/post/:slug' do |slug|
   end
 end
 
+get '/posts' do
+  content_type :json
+  Post.list_files.to_json
+end
+post '/post/update/:password/:id' do |password,id|
+  if password == "openup"
+    if id == "all"
+      Post.update
+      haml :update_successful
+    elsif Post.include?(id)
+      Post.update(id.to_i)
+      haml :update_successful
+    else
+      haml :not_found
+    end
+  else
+    haml :not_found
+  end
+end
 get '/projects' do
   @extra_title = "Projects"
   haml :projects

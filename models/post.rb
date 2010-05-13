@@ -3,6 +3,19 @@ class Post
   before :save, :create_slug
   before :save, :set_created_at
 
+  def self.list_files
+    Dir.entries(File.join(APP_ROOT, 'posts').delete_if{|i| i.match(/^\..*$/)})
+  end
+
+  def self.include?(id)
+    posts= all.select{|i| i.file_name.match(id)}
+    if posts != []
+      true
+    else
+      false
+    end
+  end
+
   def date
     created_at.strftime("%d %b") if created_at
   end
