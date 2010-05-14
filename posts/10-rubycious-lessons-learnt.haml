@@ -1,0 +1,118 @@
+%h1 Stuff I learnt writing Rubycious
+%span.date 14-05-2010
+%span.categories ruby
+%p.content
+  .snippet
+    :markdown
+      Day before yesterday, I released my del.icio.us API wrapper gem [rubycious](http://github.com/rjsvaljean/rubycious). There are a couple of things I learnt while writing it that I'd like to share here. To give you a heads up on what's inside:
+      
+      1. Meta-Programming
+        * class_eval
+        * self.included
+        * method_missing
+      2. Documentation with YARD
+      3. Publishing a gem
+     
+      If that's piqued your curiousity [click](/post/rubycious-lessons-learnt) on through.
+  .main
+    %p#meta-programming
+      :markdown
+        ### Meta-Programming
+
+        Before I go any further, I must warn you that some of the choices I'd made, design-wise weren't exactly the smartest and I know that. But given those choices, I was faced with certain problems that had to be solved and I'm glad that it led me to learn about some cool Ruby meta-programming.
+
+        #### class_eval
+
+        This is a class method which any object of type Class has(by that I mean, of course, any ruby Class (Ain't ruby grand!)). It takes a block and dynamically puts the contents of that block inside your class. Now this is only useful if you have to dynamically add stuff to your class. One oft-used use case of this facility is in conjunction with self.included. Trivially though the following should illustrate what class_eval can do
+
+        <pre name="code" class="ruby">
+        class A
+          def do_something
+            something
+          end
+        end
+
+        A.class_eval do
+          def something
+            puts "Hello World!"
+          end
+        end
+        </pre>
+
+        Now there are a couple of other methods in the *eval* family, namely, *instance_eval*[(1)](http://ruby-doc.org/core/classes/Object.html#M000334)[(2)](http://toolmantim.com/thoughts/instance_eval_brings_sexy_back), *module_eval*(just an alias for class_eval) and just *eval*[(1)](http://blog.jayfields.com/2006/07/ruby-eval-with-binding.html). They're equally cool and useful and to pretty much the same thing so I'll leave it to you to discover more about them.
+        #### self.included
+
+        This is basically a call_back defined for any module. When it gets included in a class this method is run. The reason I'm calling it *self*.included is usually its usage goes something like this:
+
+        <pre name="code" class="ruby">
+        module B
+          def self.included(base)
+            puts base.class
+          end
+        end
+        </pre>
+
+        However the really interesting use case, like I mentioned earlier comes up when I put it together with class_eval like I did in Rubycious [here](http://github.com/rjsvaljean/rubycious/blob/master/lib/client_helper.rb). The module ClientHelper was meant to be included in any class that was a client and I didn't want to redefine some of the httparty declarations in each of these classes.
+        #### method_missing
+
+        This one is pretty basic and chances are you probably know about this one. If not you really should. Basically method_missing is the method called when a method called on an object is not found. It takes a symbol which contains the name of the missing method and and array of the arcuments passed to that method. The great thing about method missing is that it can be used to generate an arbitrary number of methods. See more [here](http://ruby-doc.org/core/classes/Kernel.html#M005925)
+
+        ### Documentation with YARD
+        YARD has emerged as the standard for documenting ruby projects of late, taking over from rdoc, and after using it to [document rubycious](http://rdoc.info/projects/rjsvaljean/rubycious), I can see why. YARD uses a tagging based approach to documentation. It uses directives like @param, @return, @see, @author etc. to structure your documentation and give nicely readable docs in a variety of formats. Read more about why you should use YARD [here](http://github.com/lsegal/yard). Here is an example of code documented with YARD from rubycious:
+      %pre{:name => "code", :class => "ruby"}
+        :preserve
+        \# Use for searching all URLs
+        \# NOTE: Use Sparingly. Call the update function to see if you need to fetch this at all.
+        \# @todo Look into caching these results
+        \# check the last update time before performing
+        \# @param [Hash] options for searching for the URL (all optional)
+        \# @option options [String] :tag |optional| "ruby"
+        \# @option options [String] :start |optional| Integer: Start returning posts this
+        \# many results into the set
+        \# @option options [String] :results |optional| Integer: Return these many results
+        \# @option options [String] :fromdt |optional| Format: Time#iso8601: On this date or later
+        \# @option options [String] :todt |optional| Format: Time#iso8601: On this date or earlier
+        \# @option options [String] :meta |optional| yes/no: Include change detection signatures
+        \# on each item in a 'meta' attribute. Clients wishing to maintain a
+        \# synchronized local store of bookmarks should retain the
+        \# value of this attribute - its value will change when any
+        \# significant field of the bookmark changes.
+        \# @return [Array<Rubycious::Post>]
+        \# @see Time#iso8601
+        def find(options)
+        \  response= handle_errors { self.class.get('/all', :query => options)}
+        \  response["posts"]["post"].collect{|i| Rubycious::Post.new(i)}
+        end
+      :markdown
+        See more [here](http://github.com/rjsvaljean/rubycious/blob/master/lib/client.rb)
+        
+        ### Publishing a Gem
+        I used [echoe](http://github.com/fauna/echoe) for packaging and releasing the gem. Basically echoe creates a bunch of rake tasks for you that take you through the process of creating a gem. So, first you need to define a couple of defaults in your Rakefile:
+
+        <pre name="code" class="ruby">
+        require 'rubygems'
+        require 'rake'
+        require 'echoe'
+
+        Echoe.new('rubycious', '0.1.1') do |p|
+          p.description = "Ruby wrapper to the del.icio.us API"
+          p.url = "http://github.com/rjsvlajean/rubycious"
+          p.author = "Ratan Sebastian"
+          p.email = "rjsvaljean@gmail.com"
+          p.ignore_pattern = ["tmp/*", "script/*"]
+          p.development_dependencies = ["httparty"]
+        end
+
+        Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each { |ext| load ext } e
+        </pre>
+
+        Next assuming that all your code is in your lib directory and you have a file having the same name as your gem in there, run:
+
+        <pre>
+        $ rake manifest
+        $ rake build_gemspec
+        $ gem build rubycious-0.1.1.gemspec
+        $ gem push rubycious-0.1.1.gem
+        </pre>
+
+        And that's about it for now. I plan on doing a rewrite with a bit of a better design soon but for now Rubycious is pretty stable for those using basic auth. I'll add oauth support soon in a couple of days and I'll document the procedure here.
