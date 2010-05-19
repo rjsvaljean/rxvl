@@ -1,5 +1,11 @@
 require 'sinatra'
+require 'haml'
+require 'sinatra/respond_to'
 require 'blog.rb'
+
+log = File.new("log/sinatra.log", "w")
+STDOUT.reopen(log)
+STDERR.reopen(log)
 
 root_dir= File.dirname(__FILE__)
 ENV['RACK_ENV'] ||= 'development'
