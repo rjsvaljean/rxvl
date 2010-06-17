@@ -18,7 +18,7 @@ end
 
 # root page
 get '/' do
-  @posts= Post.all
+  @posts= Post.all(:order => [:created_at.desc])
   haml :home
 end
 
@@ -44,6 +44,6 @@ delete '/post/:id' do
 end
 
 get '/tag/:slug' do
-  @posts= Tag.first(:slug => params[:slug]).posts
+  @posts= Tag.first(:slug => params[:slug]).posts(:order => [:created_at.desc])
   haml :home
 end
