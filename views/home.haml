@@ -5,7 +5,7 @@
         = post.title
     .post-info
       - post.tags.each do |tag|
-        %a{:href => tag.link}
+        %a{:href => tag.link, :class => 'tag-link'}
           = tag.name
       .clear
       = post.created_at.strftime("%d/%m/%y")

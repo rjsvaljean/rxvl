@@ -6,9 +6,14 @@
   %body
     #container
       #header
+        #nav
+          %a{:href => '/'} home
+          %a{:href => 'http://github.com/rjsvaljean'} projects
+          %a{:href => '/archive'} archive
         #logo
           %h1
             %a{:href => '/'}= SiteConfig.title
+        .clear
       #content= yield
       #footer
         %p#legal= "&mdash; &copy; #{Time.now.strftime('%Y')} #{SiteConfig.author} &mdash;"

@@ -18,7 +18,7 @@ end
 
 # root page
 get '/' do
-  @posts= Post.all(:order => [:created_at.desc])
+  @posts= Post.first(5, :order => [:created_at.desc])
   haml :home
 end
 
