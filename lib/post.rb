@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'tilt'
 
 class Post
   include DataMapper::Resource
@@ -40,7 +41,7 @@ class HTMLParser
       :slug     => create_slug,
       :snippet  => @html_doc.at_css('.snippet').inner_html,
       :content  => @html_doc.at_css('.content').inner_html,
-      :created_at =>  @html_doc.at_css('span.date').content.strip
+      :created_at =>  @html_doc.at_css('span.date').content.strip,
       :tags     => create_if_necessary_and_list_tags(@html_doc.at_css('span.categories').content.strip) }
   end
 
