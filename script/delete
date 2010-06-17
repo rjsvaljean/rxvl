@@ -1,0 +1,1 @@
+curl -i -H "X-HTTP-Method-Override: DELETE" -X POST http://localhost:4567/post/sfvbqkcaxg

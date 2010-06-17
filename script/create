@@ -1,0 +1,1 @@
+curl -F data=@test.haml http://localhost:4567/post
