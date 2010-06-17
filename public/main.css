@@ -93,9 +93,9 @@ a:hover {
   padding-right: 5px;
 }
 
-.archive-post-even {
-}
 .archive-post-odd {
+}
+.archive-post-even {
   background-color: #D9CEB2;
 }
 
