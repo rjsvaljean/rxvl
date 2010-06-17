@@ -7,8 +7,8 @@
       - post.tags.each do |tag|
         %a{:href => tag.link}
           = tag.name
-        .clear
-        = post.created_at.strftime("%d/%m/%y")
+      .clear
+      = post.created_at.strftime("%d/%m/%y")
     .clear.hr 
   %p
     =post.snippet
