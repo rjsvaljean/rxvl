@@ -1,4 +1,5 @@
 db/datastore.sqlite3
+*.db
 tmp/restart.txt
 webrat.log
 log/*.log
