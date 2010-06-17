@@ -1,0 +1,14 @@
+-ctr=0
+-@posts.each do |post|
+  -ctr += 1
+  #archive-list
+    %div{:class => ctr/2 == 1? 'archive-post-even' : 'archive-post-odd'}
+      .archive-post-title
+        =post.title
+      .archive-post-info
+        .archive-post-tags
+          =post.tags.collect{|i| i.linked_tag_name}.join(', ')
+        .archive-post-date
+          ="|"+post.created_at.strftime("%d/%m/%y")
+        .clear
+      .clear

@@ -93,6 +93,29 @@ a:hover {
   padding-right: 5px;
 }
 
+.archive-post-even {
+}
+.archive-post-odd {
+  background-color: #D9CEB2;
+}
+
+.archive-post-title {
+  width: 70%;
+  float: left;
+}
+
+.archive-post-info {
+  width: 30%;
+  float: right;
+}
+.archive-post-tags {
+  float: left;
+}
+
+.archive-post-date {
+  float: right;
+  margin-right: 10px;
+}
 /* utils */
 .clear {
   clear: both;

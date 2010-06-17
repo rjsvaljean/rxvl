@@ -22,6 +22,11 @@ get '/' do
   haml :home
 end
 
+get '/archive' do
+  @posts= Post.all(:order => [:created_at.desc])
+  haml :archive
+end
+
 # read
 get '/post/:id' do
   @post= Post.get_by_slug_or_id(params[:id])

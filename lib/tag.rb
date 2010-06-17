@@ -11,6 +11,10 @@ class Tag
   def link
     "/tag/#{slug}"
   end
+
+  def linked_tag_name
+    "<a href='#{link}'>#{name}</a>"
+  end
 end
 
 class PostTag
