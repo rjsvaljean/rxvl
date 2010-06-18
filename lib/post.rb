@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'tilt'
+require 'maruku'
 
 class Post
   include DataMapper::Resource
@@ -27,6 +28,10 @@ class Post
 
   def self.get_by_slug_or_id(id)
     id.to_i == 0 ? Post.first(:slug => id) : Post.get(id.to_i)
+  end
+
+  def created_at_date
+    created_at.strftime('%d %b \'%y')
   end
 end
 

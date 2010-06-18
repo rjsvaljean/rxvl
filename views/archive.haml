@@ -10,6 +10,6 @@
         .archive-post-tags
           =post.tags.collect{|i| i.linked_tag_name}.join(', ')
         .archive-post-date
-          ="|"+post.created_at.strftime("%d/%m/%y")
+          ="|"+post.created_at_date
         .clear
       .clear

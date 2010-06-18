@@ -104,6 +104,10 @@ a:hover {
   float: left;
 }
 
+.archive-post-title a {
+  font-weight: normal;
+}
+
 .archive-post-info {
   width: 30%;
   float: right;

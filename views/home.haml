@@ -8,7 +8,7 @@
         %a{:href => tag.link, :class => 'tag-link'}
           = tag.name
       .clear
-      = post.created_at.strftime("%d/%m/%y")
+      = post.created_at_date
     .clear.hr 
   %p
     =post.snippet
