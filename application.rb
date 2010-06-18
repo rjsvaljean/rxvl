@@ -35,7 +35,7 @@ end
 
 # create
 post '/posts' do
-  Post.create_from_raw(params[:data][:tempfile])
+  Post.create_from_raw(params[:data][:tempfile]) ? "Success!":"Failure!"
 end
 
 # update
