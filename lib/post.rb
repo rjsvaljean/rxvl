@@ -23,7 +23,6 @@ class Post
     FileUtils.mv(file.path,file.path+'.haml')
     html_doc= HTMLParser.new(Tilt.new(file.path+'.haml').render)
     create(html_doc.params)
-    puts 'here'
   end
 
   def self.get_by_slug_or_id(id)

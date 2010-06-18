@@ -34,13 +34,13 @@ get '/post/:id' do
 end
 
 # create
-post '/post' do
+post '/posts' do
   Post.create_from_raw(params[:data][:tempfile])
 end
 
 # update
 post '/post/:id' do
-  Post.get_by_slug_or_id(params[:id]).update(params)
+  Post.get_by_slug_or_id(params[:id]).update(params.delete_if{|key, val| key == 'id'})
 end
 
 # delete
