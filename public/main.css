@@ -93,12 +93,9 @@ a:hover {
   padding-right: 5px;
 }
 
-.archive-post-odd {
+.archive-post {
+  padding: 10px 10px;
 }
-.archive-post-even {
-  background-color: #D9CEB2;
-}
-
 .archive-post-title {
   width: 70%;
   float: left;
@@ -128,6 +125,13 @@ a:hover {
 .hr {
   width: 100%;
   border-bottom: 1px solid;
+}
+
+.odd {
+}
+
+.even {
+  background-color: #D9CEB2;
 }
 
 .big-gap {
