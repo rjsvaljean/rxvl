@@ -21,8 +21,13 @@ class Post
 
   def self.create_from_raw(file)
     FileUtils.mv(file.path,file.path+'.haml')
-    html_doc= HTMLParser.new(Tilt.new(file.path+'.haml').render)
-    create(html_doc.params)
+    begin
+      html_doc= HTMLParser.new(Tilt.new(file.path+'.haml').render)
+      post= Post.new(html_doc.params)
+      post.save ? true : post.errors
+    rescue => e
+      [e]
+    end
   end
 
   def self.get_by_slug_or_id(id)
@@ -50,7 +55,7 @@ class HTMLParser
   end
 
   def create_slug
-    tentative_slug= title.downcase.gsub(/\W/,'-')
+    tentative_slug= title.downcase.gsub(/\W/,'-').gsub(/[-]+/,'-').gsub(/^-|-$/,'')[0..49]
     if Post.first(:slug => tentative_slug)
       tentative_slug+(tentative_slug[-1..-1].to_i+1).to_s
     else

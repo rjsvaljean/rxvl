@@ -35,7 +35,12 @@ end
 
 # create
 post '/posts' do
-  Post.create_from_raw(params[:data][:tempfile]) ? "Success!":"Failure!"
+  if (response=Post.create_from_raw(params[:data][:tempfile])) == true
+    'Success!'
+  else
+    'Failure!' + 
+    response.to_hash.to_yaml
+  end
 end
 
 # update
