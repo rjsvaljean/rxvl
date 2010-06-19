@@ -36,7 +36,7 @@ end
 # create
 post '/posts' do
   format_output(Post.create_from_raw(params[:data][:tempfile], 
-                                      params[:data][:filename])
+                                     params[:data][:filename]))
 end
 
 # update
