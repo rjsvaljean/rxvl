@@ -35,17 +35,19 @@ end
 
 # create
 post '/posts' do
-  if (response=Post.create_from_raw(params[:data][:tempfile])) == true
-    'Success!'
-  else
-    'Failure!' + 
-    response.to_hash.to_yaml
-  end
+  format_output(Post.create_from_raw(params[:data][:tempfile]), 
+                                      params[:data][:filename])
 end
 
 # update
 post '/post/:id' do
-  Post.get_by_slug_or_id(params[:id]).update(params.delete_if{|key, val| key == 'id'})
+  @post= Post.get_by_slug_or_id(params[:id])
+  if params.has_key?(:data)
+    @post.update(params.delete_if{|key, val| key == 'id'})
+  else
+    format_output(@post.update_from_raw(params[:data][:tempfile], 
+                                        params[:data][:filename]))
+  end
 end
 
 # delete
@@ -56,4 +58,13 @@ end
 get '/tag/:slug' do
   @posts= Tag.first(:slug => params[:slug]).posts(:order => [:created_at.desc])
   haml :home
+end
+
+def format_output(response)
+  if response == true
+    'Success!'
+  else
+    'Failure!' + 
+    response.to_hash.to_yaml
+  end
 end

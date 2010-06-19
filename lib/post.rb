@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'tilt'
-require 'maruku'
+require 'rdiscount'
 
 class Post
   include DataMapper::Resource
@@ -19,12 +19,22 @@ class Post
 
   validates_presence_of :title
 
-  def self.create_from_raw(file)
-    FileUtils.mv(file.path,file.path+'.haml')
+  def self.create_from_raw(file, filename)
+    FileUtils.mv(file.path,file.path+File.extname(filename))
     begin
-      html_doc= HTMLParser.new(Tilt.new(file.path+'.haml').render)
+      html_doc= HTMLParser.new(Tilt.new(file.path+File.extname(filename)).render)
       post= Post.new(html_doc.params)
       post.save ? true : post.errors
+    rescue => e
+      [e]
+    end
+  end
+
+  def update_from_raw(file, filename)
+    FileUtils.mv(file.path,file.path+File.extname(filename))
+    begin
+      html_doc= HTMLParser.new(Tilt.new(file.path+File.extname(filename)).render)
+      self.update(html_doc.params) ? true : self.errors
     rescue => e
       [e]
     end
@@ -55,12 +65,7 @@ class HTMLParser
   end
 
   def create_slug
-    tentative_slug= title.downcase.gsub(/\W/,'-').gsub(/[-]+/,'-').gsub(/^-|-$/,'')[0..49]
-    if Post.first(:slug => tentative_slug)
-      tentative_slug+(tentative_slug[-1..-1].to_i+1).to_s
-    else
-      tentative_slug
-    end
+    title.downcase.gsub(/\W/,'-').gsub(/[-]+/,'-').gsub(/^-|-$/,'')[0..49]
   end
 
   def title
