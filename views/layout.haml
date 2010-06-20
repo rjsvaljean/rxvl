@@ -2,7 +2,15 @@
 %html
   %head
     %title= @title || SiteConfig.title
-    %link{:href => '/main.css', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => '/css/main.css', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => '/css/prettify.css', :rel => 'stylesheet', :type => 'text/css'}
+    %script{:type => 'text/javascript', :src => '/js/jquery-1.4.2.min.js'}
+    %script{:type => 'text/javascript', :src => '/js/prettify/prettify.js'}
+    %script{:type => 'text/javascript'}
+      $(document).ready(function () { 
+      $('pre').addClass('prettyprint')
+      prettyPrint() 
+      });
   %body
     #container
       #header
