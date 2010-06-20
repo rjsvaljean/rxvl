@@ -119,6 +119,16 @@ a:hover {
   margin-right: 10px;
   width: 40%;
 }
+
+pre.prettyprint {
+  background-color: #D9CEB2;
+}
+
+code {
+  background-color: #D9CEB2;
+  padding: 5px;
+  font-weight: bold;
+}
 /* utils */
 .clear {
   clear: both;
