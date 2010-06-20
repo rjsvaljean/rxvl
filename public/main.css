@@ -2,7 +2,7 @@ body {
   background: #D5DED9;
   color: #948C75;
   font-family: Helvetica, sans-serif, Verdana, Arial;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 #container {
   margin: 0 auto;
@@ -111,11 +111,13 @@ a:hover {
 }
 .archive-post-tags {
   float: left;
+  width: 50%;
 }
 
 .archive-post-date {
   float: right;
   margin-right: 10px;
+  width: 40%;
 }
 /* utils */
 .clear {
