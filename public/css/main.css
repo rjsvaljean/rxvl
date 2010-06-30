@@ -1,18 +1,32 @@
 body {
-  background: #D5DED9;
+  background: #E8E8E8;
   color: #948C75;
-  font-family: Helvetica, sans-serif, Verdana, Arial;
+  font-family: sans-serif, Verdana, Arial;
   font-size: 1.2em;
 }
 #container {
   margin: 0 auto;
   width: 1000px;
 }
+
+.left-pane {
+  width: 55%;
+  float: left;
+}
+
+.right-pane {
+  width: 40%;
+  float: right;
+}
+
 #header {
   padding: 0.5em 0 0 0;
   margin: 0;
   width: 100%;
   border-bottom: 3px solid #000;
+}
+
+#header h1 {
   font-family: monospace;
 }
 
@@ -74,7 +88,10 @@ a:hover {
   width: 100%;
 } 
 
-.post-header h2 {
+.post-date {
+  font-size: 0.7em;
+}
+.post-header h4 {
   width: 70%;
   float: left;
 }
@@ -89,8 +106,7 @@ a:hover {
 .tag-link {
   margin-right: 5px;
   background-color: #D9CEB2;
-  padding-left: 5px;
-  padding-right: 5px;
+  line-height: 1.8em;
 }
 
 .archive-post {
@@ -128,6 +144,18 @@ code {
   background-color: #D9CEB2;
   padding: 5px;
   font-weight: bold;
+}
+
+.project {
+  width: 100%;
+  overflow: auto;
+}
+.project-name {
+  display: inline;
+  font-size: 0.9em;
+}
+.short-desc {
+  float: right;
 }
 /* utils */
 .clear {

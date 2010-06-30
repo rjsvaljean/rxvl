@@ -1,15 +1,40 @@
--@posts.each do |post|
-  .post-header
-    %h2
-      %a{:href => "/post/#{post.slug}"}
-        = post.title
-    .post-info
-      - post.tags.each do |tag|
-        %a{:href => tag.link, :class => 'tag-link'}
-          = tag.name
-      .clear
-      = post.created_at_date
-    .clear.hr 
-  %p
-    =post.snippet
-  .big-gap 
+.left-pane
+  -@posts.each do |post|
+    .post-header
+      %h4
+        %a{:href => "/post/#{post.slug}"}
+          = post.title
+        %br
+        .post-date
+          = post.created_at_date
+      .post-info
+        - post.tags.each do |tag|
+          %a{:href => tag.link, :class => 'tag-link'}
+            = tag.name
+        .clear
+      .clear.hr 
+    .big-gap 
+.right-pane
+  :markdown
+    ## About Me
+
+    Hey, I'm Ratan Sebastian, a Programmer from Chennai, India. Besides [code](http://github.com/rjsvaljean), I dabble in [quizzing](http://rxvl.wordpress.com) and [photography](http://flickr.com/photos/rjsvaljean). You can reach me via [email](mailto:rjsvaljean@gmail.com) or follow me([@rjsvaljean](http://twitter.com/rjsvaljean)) on twitter.
+
+    ## Projects
+  #projects
+    .project
+      %h4.project-name
+        %a{:href => 'http://github.com/rjsvaljean'} rxvl
+      %span.short-desc
+        custom blogging engine
+    .project
+      %h4.project-name
+        %a{:href => 'http://github.com/rjsvaljean'} node-notepad
+      %span.short-desc
+        collaborative editing tool
+    .project
+      %h4.project-name
+        %a{:href => 'http://github.com/rjsvaljean'} rubycious
+      %span.short-desc
+        del.icio.us API wrapper
+.clear
