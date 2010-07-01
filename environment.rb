@@ -11,9 +11,9 @@ require 'sinatra' unless defined?(Sinatra)
 
 configure do
   SiteConfig = OpenStruct.new(
-                 :title => 'rxvl',
+                 :title => 'RatSpeak',
                  :author => 'Ratan Sebastian',
-                 :url_base => 'http://localhost:4567/'
+                 :url_base => 'http://rxvl.in/'
                )
 
   # load models

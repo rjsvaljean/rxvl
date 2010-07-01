@@ -13,13 +13,39 @@ error do
 end
 
 helpers do
-  # add your helpers here
+  def post_permalink(slug)
+    "#{SiteConfig.url_base}post/#{slug}"
+  end 
 end
 
 # root page
 get '/' do
   @posts= Post.first(5, :order => [:created_at.desc])
   haml :home
+end
+
+get '/posts.xml' do
+  @posts= Post.all(:order => [:created_at.desc])
+  builder do |xml|
+    xml.instruct! :xml, :version => '1.0'
+    xml.rss :version => "2.0" do
+      xml.channel do
+        xml.title "rxvl"
+        xml.description "Ratan Sebastian's posts"
+        xml.link "http://rxvl.in"
+
+        @posts.each do |post|
+          xml.item do
+            xml.title post.title
+            xml.link post_permalink(post.slug)
+            xml.description post.content
+            xml.pubDate Time.parse(post.created_at.to_s).rfc822()
+            xml.guid post_permalink(post.slug)
+          end
+        end
+      end
+    end
+  end
 end
 
 get '/archive' do
@@ -30,6 +56,7 @@ end
 # read
 get '/post/:id' do
   @post= Post.get_by_slug_or_id(params[:id])
+  @title= @post.title
   haml :post
 end
 

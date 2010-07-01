@@ -4,7 +4,7 @@
   #archive-list
     %div{:class => ctr%2 == 1? 'archive-post even' : 'archive-post odd'}
       .archive-post-title
-        %a{:href => "/post/#{post.slug}"}
+        %a{:href => post_permalink(post.slug)}
           =post.title
       .archive-post-info
         .archive-post-tags

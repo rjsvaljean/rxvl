@@ -53,10 +53,20 @@ body {
 #footer {
   padding: 0;
   margin: 0;
-  font-size: 0.7em;
+  font-size: 0.8em;
   text-align: center;
   border-top: 3px solid #000;
 }
+
+#footer a img {
+  border: none;
+  width: 14px;
+}
+
+img.rss {
+  width: 30px !important
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0em;
   margin-bottom: .25em;

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title= @title || SiteConfig.title
+    %title= @title? "#{SiteConfig.title}: #{@title}" : SiteConfig.title
     %link{:href => '/css/main.css', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/css/prettify.css', :rel => 'stylesheet', :type => 'text/css'}
     %script{:type => 'text/javascript', :src => '/js/jquery-1.4.2.min.js'}
@@ -24,7 +24,21 @@
         .clear
       #content= yield
       #footer
-        %p#legal= "&mdash; &copy; 2010 <a href='http://twitter.com/rjsvaljean'>#{SiteConfig.author}</a> &mdash;"
+        %p#legal
+          &mdash; &copy; 2010 
+          %a{:href => 'http://twitter.com/rjsvaljean'}
+            =SiteConfig.author
+          \:
+          %a{:href => 'http://twitter.com/rjsvaljean'}
+            %img{:src => '/images/twitter.jpg'}
+          %a{:href => 'http://in.linkedin.com/in/ratanjs'}
+            %img{:src => '/images/linkedin.jpg'}
+          %a{:href => 'http://github.com/rjsvaljean'}
+            %img{:src => '/images/github.jpg'}
+          %a{:href => '/posts.xml'}
+            %img{:src => '/images/rss.jpg', :class => 'rss'}
+          &mdash;
+
         %script{:type => "text/javascript"}
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-17222673-1']);
